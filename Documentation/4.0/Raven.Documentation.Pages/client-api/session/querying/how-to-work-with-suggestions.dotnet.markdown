@@ -9,7 +9,7 @@
 | Parameters | | |
 | ------------- | ------------- | ----- |
 | **suggestion** | `SuggestionBase`  | Defines the type of suggestion that should be executed |
-| **factory** | `Action<ISuggestionFactory<T>>` | Factory with fluent API that builds `SuggestionBase` instance |
+| **builder** | `Action<ISuggestionFactory<T>>` | Builder with fluent API that constructs `SuggestionBase` instance |
 
 ### Options
 
