@@ -67,6 +67,13 @@ http://localhost:8080/admin/monitoring/v1/prometheus?skipIndexesMetrics=true
 And to skip both indexing and server metrics use -  
 http://localhost:8080/admin/monitoring/v1/prometheus?skipIndexesMetrics=true&skipServerMetrics=true
 
+GC (garbage collection) metrics are excluded by default due to their performance cost.  
+To include GC metrics, set the following flag to `true`:  
+`includeGcMetrics`  
+
+E.g., to include GC metrics use -  
+http://localhost:8080/admin/monitoring/v1/prometheus?includeGcMetrics=true
+
 ## Metrics Provided by the Prometheus Endpoint
 
 Here is the list of metrics made available by the `/admin/monitoring/v1/prometheus` endpoint.  
@@ -130,6 +137,22 @@ Here is the list of metrics made available by the `/admin/monitoring/v1/promethe
 | database_uptime_seconds | Database up-time |
 | databases_loaded_count | Number of loaded databases |
 | databases_total_count | Number of all databases |
+| gc_compacted | Whether the last garbage collection was compacting + `0`/`1` <br/> 0 =&gt; false <br/> 1 =&gt; true <br/> Tagged with `gcKind` (e.g., `any`). Included only when `includeGcMetrics=true`. |
+| gc_concurrent | Whether the last garbage collection was concurrent + `0`/`1` <br/> 0 =&gt; false <br/> 1 =&gt; true <br/> Tagged with `gcKind` (e.g., `any`). Included only when `includeGcMetrics=true`. |
+| gc_finalization_pending_count | Number of objects pending finalization observed during the last garbage collection. Tagged with `gcKind`. Included only when `includeGcMetrics=true`. |
+| gc_fragmented_mb | Heap fragmentation in MB after the last garbage collection. Tagged with `gcKind`. Included only when `includeGcMetrics=true`. |
+| gc_generation | Generation collected by the last garbage collection. Tagged with `gcKind`. Included only when `includeGcMetrics=true`. |
+| gc_heap_size_mb | Total GC heap size in MB after the last garbage collection. Tagged with `gcKind`. Included only when `includeGcMetrics=true`. |
+| gc_high_memory_load_threshold_mb | High memory load threshold in MB at the time of the last garbage collection. Tagged with `gcKind`. Included only when `includeGcMetrics=true`. |
+| gc_index | Index of the last garbage collection. Tagged with `gcKind`. Included only when `includeGcMetrics=true`. |
+| gc_memory_load_mb | Memory load in MB at the time of the last garbage collection. Tagged with `gcKind`. Included only when `includeGcMetrics=true`. |
+| gc_pause_durations1_seconds | First GC pause duration in seconds recorded during the last garbage collection. Tagged with `gcKind`. Included only when `includeGcMetrics=true`. |
+| gc_pause_durations2_seconds | Second GC pause duration in seconds recorded during the last garbage collection. Tagged with `gcKind`. Included only when `includeGcMetrics=true`. |
+| gc_pause_time_percentage | Percentage of time spent paused for GC since the previous collection. Tagged with `gcKind`. Included only when `includeGcMetrics=true`. |
+| gc_pinned_objects_count | Number of pinned objects observed during the last garbage collection. Tagged with `gcKind`. Included only when `includeGcMetrics=true`. |
+| gc_promoted_mb | Memory promoted during the last garbage collection in MB. Tagged with `gcKind`. Included only when `includeGcMetrics=true`. |
+| gc_total_available_memory_mb | Total available memory for the GC in MB at the time of the last garbage collection. Tagged with `gcKind`. Included only when `includeGcMetrics=true`. |
+| gc_total_committed_mb | Total committed managed heap size in MB after the last garbage collection. Tagged with `gcKind`. Included only when `includeGcMetrics=true`. |
 | index_entries_count | Number of entries in the index |
 | index_errors | Number of index errors |
 | index_is_invalid | Indicates if index is invalid |
